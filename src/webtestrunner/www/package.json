@@ -1,0 +1,36 @@
+{
+  "name": "WebTestRunner",
+  "description": "Web-based interface for selectively executing client-side Python UnitTests",
+  "version": "0.1.0",
+  "homepage": "https://github.com/jessejlt/WebTestRunner",
+  "author": {
+    "name": "Jesse Thompson",
+    "email": "jessejlt@gmail.com",
+    "url": "https://github.com/jessejlt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jessejlt/WebTestRunner.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jessejlt/WebTestRunner/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/jessejlt/WebTestRunner/blob/master/LICENSE-MIT"
+    }
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.2.15"
+  },
+  "keywords": [],
+  "engines": {
+    "node": ">= 0.6.13"
+  },
+  "main": "lib/WebTestRunner",
+  "scripts": {
+    "test": "grunt test"
+  }
+}
