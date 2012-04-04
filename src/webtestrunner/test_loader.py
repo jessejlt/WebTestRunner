@@ -52,6 +52,9 @@ def list_tests(name):
     Popen(["nosetests", "--collect-only", "--with-id", "--id-file=%s" % id_file, name], stdout=PIPE, stderr=PIPE).communicate()
     fh = open(id_file, "rb")
     data = pickle.load(fh)
+    fh.close()
+
+    os.remove(id_file)
 
     return data["ids"]
 

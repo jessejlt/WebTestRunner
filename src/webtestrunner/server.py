@@ -21,12 +21,12 @@ def list_tests_from_module_name(module_name):
 @app.route("/test/name/<test_name>/module/<test_module>")
 def test(test_name, test_module):
     # nosetests --with-id test_id
-    results = TestRunner.run(test_name, test_module)
-
+    results = TestRunner().run(test_name, test_module)
+    return jsonfiy(results)
 
 
 if __name__ == '__main__':
-    webbrowser.open("http://localhost:4050")
+    # webbrowser.open("http://localhost:4050")
 
     # debug
     app.run(host='0.0.0.0', port=4050, debug=True)
@@ -35,5 +35,15 @@ if __name__ == '__main__':
     # app.run(host='0.0.0.0', port=4050)
 
 
+"""
+curl -XGET localhost:4050/tests/flask
+{
+    "1": [
+        "/Library/Python/2.7/site-packages/flask/testing.py",
+        "flask.testing",
+        "make_test_environ_builder"
+    ]
+}
 
-
+curl -XGET localhost:4050/test/name/testing.make_test_environ_builder/module/flask.testing
+"""

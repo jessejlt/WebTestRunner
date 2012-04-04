@@ -1,5 +1,6 @@
 from nose.core import TextTestRunner
 from nose.loader import TestLoader
+from StringIO import StringIO
 
 
 class TestRunner(object):
@@ -7,31 +8,29 @@ class TestRunner(object):
     def __init__(self, *args, **kwargs):
         super(TestRunner, self).__init__(*args, **kwargs)
 
-    @classmethod
-    def run(test_name, test_module):
-        test_runner = TestRunner()
-        (result, err) = test_runner.load_module(test_module)
+    def run(self, test_name, test_module):
+        (result, err) = self.load_module(test_module)
         if not result:
             return (result, err)
 
-        (result, err) = test_runner.load_test(test_name)
+        (result, err) = self.load_test(test_name)
         if not result:
             return (result, err)
 
-        results = test_runner.run_test()
+        results = self.run_test()
         return results
 
     def load_module(self, test_module):
-        if "module" not in self:
+        if not hasattr(self, "module"):
             try:
                 self.module = __import__(test_module)
             except:
                 return (False, "Failed to import test module %s" % test_module)
 
-        return (True)
+        return (True, None)
 
     def load_test(self, test_name):
-        if "loader" not in self:
+        if not hasattr(self, "loader"):
             self.loader = TestLoader()
 
         try:
@@ -39,13 +38,23 @@ class TestRunner(object):
         except:
             return (False, "Failed to load test %s" % test_name)
 
-        return (True)
+        return (True, None)
 
     def run_test(self):
-        if "runner" not in self:
-            self.runner = TextTestRunner()
+        report = StringIO()
+        runner = TextTestRunner(report)
+        results = runner.run(self.suite)
 
-        results = self.runner.run(self.suite)
-        return results
+        result = {
+            "pass": results.wasSuccessful(),
+            "error": report.getvalue()
+        }
+
+        return result
+
+
+if __name__ == "__main__":
+    result = TestRunner().run("test.FlaskTests.test_add_bug", "pixelverifyserver.test")
+    print result
 
 
