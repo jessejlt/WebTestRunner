@@ -22,7 +22,17 @@ def list_tests_from_module_name(module_name):
 def test(test_name, test_module):
     # nosetests --with-id test_id
     results = TestRunner().run(test_name, test_module)
-    return jsonfiy(results)
+    return jsonify(results)
+
+@app.route("/status")
+def status():
+    # Add any hooks necessary to determine if the test environment is ready
+    # for testing
+    return jsonify({"status": True, "errorMessage": None})
+
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 
 if __name__ == '__main__':
