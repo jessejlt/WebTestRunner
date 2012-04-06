@@ -1,7 +1,8 @@
 from webtestrunner.test_loader import list_tests
 from webtestrunner.runner import TestRunner
-from flask import *
+from flask import Flask, session, jsonify, abort, render_template
 import webbrowser
+import os
 
 app = Flask(__name__)
 
@@ -10,13 +11,28 @@ def list_tests_from_module_path(module_path):
     if not os.path.exists(module_path):
         abort(501)
 
-    tests = list_tests(module_path)
-    return jsonify(tests)
+    session["tests"] = tests
+    return jsonify({"tests": tests})
 
 @app.route("/tests/<string:module_name>")
 def list_tests_from_module_name(module_name):
     tests = list_tests(module_name)
-    return jsonify(tests)
+    session["tests"] = tests
+    return jsonify({"tests": tests})
+
+@app.route("/tests/<string:module_name>/<int:id>")
+def test_via_id(module_name, id):
+
+    if "tests" not in session:
+        abort(501)
+
+    for sess in session["tests"]:
+        if sess.get("id") == id:
+            app.logger.debug("session %s, module %s" % (sess["name"], sess["module"]))
+            results = TestRunner().run(sess["name"], sess["module"])
+            break
+
+    return jsonify(results)
 
 @app.route("/test/name/<test_name>/module/<test_module>")
 def test(test_name, test_module):
@@ -36,24 +52,13 @@ def index():
 
 
 if __name__ == '__main__':
-    # webbrowser.open("http://localhost:4050")
+    app.secret_key = """,kegk8rNQWz9)T}fvy*",*Et>:_W~\m4KxDjva%5&8LSI'WaM~RNe\.iJ6*r2J5"""
+    webbrowser.open("http://localhost:4050")
 
     # debug
-    app.run(host='0.0.0.0', port=4050, debug=True)
+    # app.run(host='0.0.0.0', port=4050, debug=True)
 
     # release
-    # app.run(host='0.0.0.0', port=4050)
+    app.run(host='0.0.0.0', port=4050)
 
 
-"""
-curl -XGET localhost:4050/tests/flask
-{
-    "1": [
-        "/Library/Python/2.7/site-packages/flask/testing.py",
-        "flask.testing",
-        "make_test_environ_builder"
-    ]
-}
-
-curl -XGET localhost:4050/test/name/testing.make_test_environ_builder/module/flask.testing
-"""

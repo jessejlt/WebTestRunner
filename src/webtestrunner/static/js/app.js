@@ -20,17 +20,18 @@
 
         this.options            = _.extend({}, defaults, options);
         app.events              = _.extend({}, Backbone.Events);
+        app.errorModalEl        = "#error-message";
 
         var router              = testRunner.module("router");
         var status              = testRunner.module("status");
         var library             = testRunner.module("library");
-        var tests               = testRunner.module("test");
+        var tests               = testRunner.module("tests");
 
         app.router              = new router.Routes();
 
         app.ui.status           = new status.Views.Status();
         app.ui.library          = new library.Views.Library();
-        app.ui.tests            = new test.Views.Test();
+        app.ui.tests            = new tests.Views.Tests();
 
         Backbone.history.start();
 
@@ -38,6 +39,11 @@
     };
 
     app.init();
+    $(app.errorModalEl).modal({show: false});
+    $(app.errorModalEl).hide();
+    $(app.errorModalEl).find(".modal-footer button").click(function() {
+        $(app.errorModalEl).hide();
+    });
 
 })();
 

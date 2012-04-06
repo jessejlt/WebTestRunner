@@ -56,11 +56,29 @@ def list_tests(name):
 
     os.remove(id_file)
 
-    return data["ids"]
+    tests = []
+    ids = data["ids"]
+    for id in ids.keys():
+        if len(ids[id]) == 3:
+            name_preamble = ".".join(ids[id][1].split(".")[1:])
+            if ids[id][2]:
+                test = {
+                    "id": id,
+                    # "path": ids[id][0],
+                    "name": name_preamble + "." + ids[id][2],
+                    "module": ids[id][1]
+                }
+                tests.append(test)
+            else:
+                # ToDo
+                # Why are some tests like this?
+                pass
+
+    return tests
 
 
 if __name__ == "__main__":
-    tests = list_tests("nosetests")
+    tests = list_tests("flask")
     print tests
 
 

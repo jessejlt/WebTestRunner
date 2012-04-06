@@ -8,7 +8,7 @@
 
     testLibrary: function(library) {
 
-      app.ui.library.fetchTestsForLibrary(library);
+      app.events.trigger("fetch-tests", library);
     }
 
   });

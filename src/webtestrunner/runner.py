@@ -54,7 +54,10 @@ class TestRunner(object):
 
 
 if __name__ == "__main__":
-    result = TestRunner().run("test.FlaskTests.test_add_bug", "pixelverifyserver.test")
+    # result = TestRunner().run("test.FlaskTests.test_add_bug", "pixelverifyserver.test")
+    # result = TestRunner().run("testsuite.find_all_tests", "flask.testsuite")
+    result = TestRunner().run("testsuite.testing.TestToolsTestCase.test_environ_defaults", "flask.testsuite.testing")
+
     print result
 
 
