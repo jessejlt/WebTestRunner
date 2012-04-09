@@ -22,7 +22,7 @@ class TestRunner(object):
         for failure in result.failures:
             ret.update({"stack": failure[1]})
             ret.update({"log": report.getvalue()})
-            
+
         for error in result.errors:
             ret.update({"error": error[1]})
 

@@ -34,5 +34,6 @@ setup(name='WebTestRunner',
     entry_points={
         'console_scripts':
             ['WebTestRunner=webtestrunner.server:main']
-    }
+    },
+    test_suite="webtestrunner.tests.tests"
 )

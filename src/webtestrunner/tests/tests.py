@@ -5,6 +5,7 @@ import os
 import time
 import json
 
+
 class MockTests(TestCase):
 
     def setUp(self):
@@ -30,23 +31,11 @@ class MockTests(TestCase):
         self.assertTrue(os.path.exists(path))
 
 
-class TestFlaskWeb(TestCase):
+class TestWebAPIs(TestCase):
 
     def setUp(self):
         self.app = app.test_client()
 
-    def test_flask_env(self):
-        test_name = "TestToolsTestCase.test_environ_defaults"
-        test_module = "flask.testsuite.testing"
-        url = "/test/name/%s/module/%s" % (test_name, test_module)
-        response = self.app.get(url)
-        
-    def test_flask_cookie(self):
-        test_name = "TestToolsTestCase.test_session_transaction_needs_cookies"
-        test_module = "flask.testsuite.testing"
-        url = "/test/name/%s/module/%s" % (test_name, test_module)
-        response = self.app.get(url)
-        
     def test_mock_fail(self):
         test_name = "MockTests.test_fail"
         test_module = "webtestrunner.tests.tests"
@@ -54,7 +43,7 @@ class TestFlaskWeb(TestCase):
         response = self.app.get(url)
         data = json.loads(response.data)
         self.assertTrue(data["pass"] == False)
-        
+
     def test_mock_pass(self):
         test_name = "MockTests.test_pass"
         test_module = "webtestrunner.tests.tests"

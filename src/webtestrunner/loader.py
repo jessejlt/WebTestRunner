@@ -79,9 +79,3 @@ if __name__ == "__main__":
     tests = list_tests("flask")
     print tests
 
-
-# nosetests pixelverifyserver.test:FlaskTests.test_add_bug
-# unittest.TestLoader().loadTestsFromName("test.FlaskTests.test_add_bug", module=__import__("pixelverifyserver.test"))
-# module = __import__("pixelverifyserver.test")
-# suite = nose.loader.TestLoader().loadTestsFromName("test.FlaskTests.test_add_bug", module=module)
-

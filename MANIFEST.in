@@ -1,2 +1,6 @@
 include README.rst
 include NEWS.txt
+recursive-include src/webtestrunner/templates *.html
+recursive-include src/webtestrunner/static/img *.png
+recursive-include src/webtestrunner/static/css *.css
+recursive-include src/webtestrunner/static/js *.js

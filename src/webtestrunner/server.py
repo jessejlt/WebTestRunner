@@ -77,10 +77,10 @@ def main():
     print "http://localhost:4050"
 
     # debug
-    # app.run(host='0.0.0.0', port=4050, debug=True)
+    app.run(host='0.0.0.0', port=4050, debug=True)
 
     # release
-    app.run(host='0.0.0.0', port=4050)
+    # app.run(host='0.0.0.0', port=4050)
 
 
 if __name__ == '__main__':
