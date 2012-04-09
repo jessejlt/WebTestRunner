@@ -10,7 +10,12 @@
 
     events: {
 
-      "click .btn": "updateTestLibrary"
+      "click #submit-library": "updateTestLibrary"
+    },
+
+    initialize: function() {
+
+      $(this.el).modal({backdrop: true});
     },
 
     updateTestLibrary: function() {
@@ -20,6 +25,7 @@
       if (library) {
 
         app.router.navigate("library/" + library, {trigger: true});
+        $(this.el).modal("hide");
       } else {
 
         // TODO

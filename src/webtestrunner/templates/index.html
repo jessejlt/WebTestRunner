@@ -25,25 +25,6 @@
       <div id="init-message" class="row">
       </div><!--/.row -->
       <div class="page-header">
-        <h1>Test Library</h1>
-      </div>
-      <div class="row">
-        <div class="span12">
-          <form>
-            <fieldset>
-              <div class="control-group">
-                <div class="controls">
-                  <div id="test-library" class="input-append">
-                    <input class="span2" id="appendedPrependedInput" size="16" type="text"><button class="btn" type="button">Submit</button>
-                    <p class="help-block">Enter the library you want to test</p>
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-          </form>
-        </div><!--/.span12 -->
-      </div><!--/.row -->
-      <div class="page-header">
         <h1>Tests</h1>
       </div>
       <div class="row">
@@ -88,16 +69,27 @@
       </div><!--/.row -->
     </div><!--/.container -->
 
-    <div class="modal" id="error-message">
+    <div class="modal" id="test-library">
       <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
-        <h3>Modal header</h3>
+        <h3>Library Name</h3>
       </div>
       <div class="modal-body">
-
+        <form>
+          <fieldset>
+            <div class="control-group">
+              <div class="controls">
+                <div class="input-append">
+                  <input class="span2" size="16" type="text">
+                  <p class="help-block">Enter the library you want to test</p>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary">Close</button>
+        <button id="submit-library" class="btn btn-primary" type="button">Submit</button>
       </div>
     </div>
 

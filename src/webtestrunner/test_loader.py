@@ -60,12 +60,10 @@ def list_tests(name):
     ids = data["ids"]
     for id in ids.keys():
         if len(ids[id]) == 3:
-            name_preamble = ".".join(ids[id][1].split(".")[1:])
             if ids[id][2]:
                 test = {
                     "id": id,
-                    # "path": ids[id][0],
-                    "name": name_preamble + "." + ids[id][2],
+                    "name": ids[id][2],
                     "module": ids[id][1]
                 }
                 tests.append(test)

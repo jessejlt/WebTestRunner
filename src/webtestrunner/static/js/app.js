@@ -20,7 +20,6 @@
 
         this.options            = _.extend({}, defaults, options);
         app.events              = _.extend({}, Backbone.Events);
-        app.errorModalEl        = "#error-message";
 
         var router              = testRunner.module("router");
         var status              = testRunner.module("status");
@@ -39,11 +38,6 @@
     };
 
     app.init();
-    $(app.errorModalEl).modal({show: false});
-    $(app.errorModalEl).hide();
-    $(app.errorModalEl).find(".modal-footer button").click(function() {
-        $(app.errorModalEl).hide();
-    });
 
 })();
 

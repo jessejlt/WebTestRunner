@@ -46,16 +46,12 @@
 
     showTestError: function(e) {
 
-      var want = document.createElement("HTMLTableCellElement");
-      if (want.isEqualNode(e.target)) {
+      // TODO stop this from being activated on checkbox click
+      var id = $(e.currentTarget).data("id");
+      var test = this.tests.get(id);
+      var errorMessage = test.get("error");
 
-        var id = $(e.currentTarget).data("id");
-        var test = this.tests.get(id);
-        var errorMessage = test.get("error");
-
-        $(app.errorModalEl).find(".modal-body").append("<p><code>" + errorMessage + "</code></p>");
-        $(app.errorModalEl).show();
-      }
+      // TODO error message via alert
     },
 
     testUpdate: function(test) {

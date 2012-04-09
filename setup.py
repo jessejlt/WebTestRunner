@@ -33,6 +33,6 @@ setup(name='WebTestRunner',
     install_requires=install_requires,
     entry_points={
         'console_scripts':
-            ['WebTestRunner=webtestrunner:main']
+            ['WebTestRunner=webtestrunner.server:main']
     }
 )
