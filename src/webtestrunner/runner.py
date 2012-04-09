@@ -1,7 +1,6 @@
 from nose.core import TextTestRunner
 from nose.loader import TestLoader
 from StringIO import StringIO
-import nose
 
 
 class TestRunner(object):
@@ -10,23 +9,31 @@ class TestRunner(object):
         super(TestRunner, self).__init__(*args, **kwargs)
 
     def run(self, test_name, test_module):
-        test_suite = TestLoader().loadTestsFromName(test_module + ":" + test_name)
+        target = "%s:%s" % (test_module, test_name)
+        test_suite = TestLoader().loadTestsFromName(target)
         report = StringIO()
         runner = TextTestRunner(report)
-        results = nose.run(suite=test_suite, testRunner=runner)
+        result = runner.run(test_suite)
 
-        result = {
-            "pass": results,
-            "error": report.getvalue()
+        ret = {
+            "pass": result.wasSuccessful()
         }
 
-        return result
+        for failure in result.failures:
+            ret.update({"stack": failure[1]})
+            ret.update({"log": report.getvalue()})
+            
+        for error in result.errors:
+            ret.update({"error": error[1]})
+
+        return ret
 
 
 if __name__ == "__main__":
-    # result = TestRunner().run("test.FlaskTests.test_add_bug", "pixelverifyserver.test")
-    # result = TestRunner().run("testsuite.find_all_tests", "flask.testsuite")
     result = TestRunner().run("TestToolsTestCase.test_environ_defaults", "flask.testsuite.testing")
+    # result = TestRunner().run("MockTests.test_fail", "webtestrunner.tests.tests")
+    # result = TestRunner().run("MockTests.test_ensure_running", "webtestrunner.tests.tests")
     print result
+
 
 

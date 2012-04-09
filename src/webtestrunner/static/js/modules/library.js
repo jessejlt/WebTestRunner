@@ -16,6 +16,14 @@
     initialize: function() {
 
       $(this.el).modal({backdrop: true});
+      app.events.bind("fetch-tests", this.closeModal, this);
+
+      $(this.el).submit(function(e) {e.preventDefault();});
+    },
+
+    closeModal: function() {
+
+      $(this.el).modal("hide");
     },
 
     updateTestLibrary: function() {
@@ -25,7 +33,6 @@
       if (library) {
 
         app.router.navigate("library/" + library, {trigger: true});
-        $(this.el).modal("hide");
       } else {
 
         // TODO

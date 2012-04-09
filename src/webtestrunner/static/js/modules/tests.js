@@ -2,6 +2,11 @@
 
   Tests.Model = Backbone.Model.extend({
 
+
+    url: function() {
+
+      return "/test/name/" + this.get("name") + "/module/" + this.get("module");
+    }
   });
 
   Tests.Collection = Backbone.Collection.extend({
@@ -32,7 +37,8 @@
       "click td > input[type=checkbox]": "selectTest",
       "click th > input[type=checkbox]": "selectAllTests",
       "click tfoot button": "executeSelectedTests",
-      "click tr[teststatus=false]": "showTestError"
+      "click tr[teststatus=false]": "showTestError",
+      "click tr[teststatus=true]": "showTestError"
     },
 
     initialize: function() {
@@ -49,9 +55,8 @@
       // TODO stop this from being activated on checkbox click
       var id = $(e.currentTarget).data("id");
       var test = this.tests.get(id);
-      var errorMessage = test.get("error");
 
-      // TODO error message via alert
+      app.events.trigger("show-error", test);
     },
 
     testUpdate: function(test) {
@@ -154,6 +159,32 @@
 
       $("#tests-progress").hide();
       $(this.el).show();
+    }
+
+  });
+
+  Tests.Views.Error = Backbone.View.extend({
+
+    el: "#error-message",
+
+    initialize: function() {
+
+      app.events.on("show-error", this.onError, this);
+      this.template = _.template('<div class="alert alert-block alert-error fade in"><a class="close" data-dismiss="alert" href="#">×</a><h4 class="alert-heading"><%= module %>:<%= name %></h4><pre><code data-language="python"><%= stack %></code></pre></div>');
+
+    },
+
+    onError: function(test) {
+
+      var testPassed = test.get("pass");
+
+      $(this.el).empty();
+      if (testPassed !== false) {
+        return;
+      }
+
+      $(this.el).html(this.template(test.attributes));
+      $(this.el).find(".alert").alert();
     }
 
   });

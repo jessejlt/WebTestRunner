@@ -1,6 +1,11 @@
 
 (function() {
 
+    window.onbeforeunload = function(e) {
+
+        $.get("/exit");
+    }
+
     var $ = jQuery;
 
     if (window.app === undefined) window.app            = {};
@@ -31,6 +36,7 @@
         app.ui.status           = new status.Views.Status();
         app.ui.library          = new library.Views.Library();
         app.ui.tests            = new tests.Views.Tests();
+        app.ui.errors           = new tests.Views.Error();
 
         Backbone.history.start();
 
